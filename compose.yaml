@@ -1,0 +1,16 @@
+# docker run --rm -p 8000:8000 -e APP_VERSION=local docker-to-ecs-real:dev
+services:
+  api:
+    image: docker-to-ecs-real:dev
+    build:
+      context: .
+    container_name: docker-to-ecs-real-api
+    ports:
+      - "8000:8000"
+    environment:
+      APP_VERSION: compose-local
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
